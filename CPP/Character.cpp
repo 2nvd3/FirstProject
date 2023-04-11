@@ -18,13 +18,11 @@ const sf::FloatRect Character::getBounds() const
 
 const int& Character::getHp() const
 {
-	// TODO: insert return statement here
 	return this->hp;
 }
 
 const int& Character::getHpMax() const
 {
-	// TODO: insert return statement here
 	return this->hpMax;
 }
 
@@ -56,14 +54,15 @@ void Character::loseHp(const int value)
 
 void Character::update()
 {
-
 }
 
+//display character
 void Character::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite);
 }
 
+//control character
 void Character::move(const float dirX, const float dirY)
 {
 	this->sprite.move(this->moveSpeed * dirX, this->moveSpeed * dirY);
