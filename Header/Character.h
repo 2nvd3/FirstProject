@@ -14,7 +14,7 @@ private:
 
 	int hp;
 	int hpMax;
-
+	//private funtion
 	void initTexture();
 	void initSprite();
 public:
