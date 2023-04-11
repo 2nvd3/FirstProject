@@ -14,7 +14,7 @@ private:
 	int type;
 	int hp;
 	int hpMax;
-	int	damage;
+	int damage;
 	int points;
 	unsigned PointCount;
 	void initTex();
