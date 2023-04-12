@@ -1,8 +1,12 @@
 # FirstProject
 -Game: Rio Fly (Version 1.0)
--Tác giả: Nguyễn Việt Dũng
+
+Tác giả: Nguyễn Việt Dũng
+
 -Mã sinh viên: 22029068
+
 -Update ver1: 12/04/2022
+
 -Những điều đã hoàn thành:
   +Tạo window
   +Tạo nhân vật và tạo hình
