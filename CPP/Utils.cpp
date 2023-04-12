@@ -199,9 +199,9 @@ void Game::updateCollision()
 		this->character->setPos(0.f, this->character->getBounds().top);
 	}
 	//right
-	else if (this->character->getBounds().left + this->character->getBounds().width > this->window->getSize().x+570)
+	else if (this->character->getBounds().left + this->character->getBounds().width > this->window->getSize().x)
 	{
-		this->character->setPos(this->window->getSize().x - this->character->getBounds().width+570 , this->character->getBounds().top);
+		this->character->setPos(this->window->getSize().x - this->character->getBounds().width , this->character->getBounds().top);
 	}
 	//top
 	if (this->character->getBounds().top < 0.f)
@@ -209,9 +209,9 @@ void Game::updateCollision()
 		this->character->setPos(this->character->getBounds().left, 0.f);
 	}
 	//bottom	
-	else if (this->character->getBounds().top + this->character->getBounds().height > this->window->getSize().y+315)
+	else if (this->character->getBounds().top + this->character->getBounds().height > this->window->getSize().y)
 	{
-		this->character->setPos(this->character->getBounds().left, this->window->getSize().y - this->character->getBounds().height+315);
+		this->character->setPos(this->character->getBounds().left, this->window->getSize().y - this->character->getBounds().height);
 	}
 	
 }
