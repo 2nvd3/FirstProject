@@ -27,7 +27,4 @@
   
  -Dự kiến version 1.1:
   
-  +Thêm màn hình game start + game end
   
-  +Thêm nhạc và các chức năng pause game,..
-  +
