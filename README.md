@@ -26,5 +26,6 @@
   +Tạo health, point text
   
  -Dự kiến version 1.1:
-  
+  //Update(18/04)
+    +Thêm nhân vật, tạo animation cho background, thêm nhạc, dồn chung nhân vật vào 1 file.
   
