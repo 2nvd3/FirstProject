@@ -1,8 +1,6 @@
 #pragma once
 
 #include "GameConfig.h"
-#include "Enemy.h"
-#include "Diamond.h"
 #include "Character.h"
 #include "Background.h"
 #include "Music.h"
