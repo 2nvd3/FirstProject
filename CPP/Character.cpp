@@ -9,6 +9,7 @@ void Character::initSprite()
 {
 	this->sprite.setTexture(this->texture);
 	this->sprite.scale(1.3f,1.3f);
+	this->sprite.setPosition(450, 450);
 }
 
 const sf::FloatRect Character::getBounds() const
@@ -54,15 +55,14 @@ void Character::loseHp(const int value)
 
 void Character::update()
 {
+
 }
 
-//display character
 void Character::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite);
 }
 
-//control character
 void Character::move(const float dirX, const float dirY)
 {
 	this->sprite.move(this->moveSpeed * dirX, this->moveSpeed * dirY);
@@ -72,7 +72,84 @@ Character::Character()
 {
 	this->hpMax = 400;
 	this->hp = this->hpMax;
-	this->moveSpeed = 3.f;
+	this->moveSpeed = 4.f;
+	this->initTexture();
+	this->initSprite();
+}
+
+void Bird::initTexture()
+{
+	this->texture.loadFromFile("Image/Character/rio.png");
+}
+
+void Bird::initSprite()
+{
+	this->sprite.setTexture(this->texture);
+	this->sprite.scale(0.5f, 0.5f);
+	this->sprite.setPosition(250, 450);
+}
+
+const sf::FloatRect Bird::getBounds() const
+{
+	return this->sprite.getGlobalBounds();
+}
+
+const int& Bird::getHp() const
+{
+	return this->hp;
+}
+
+const int& Bird::getHpMax() const
+{
+	return this->hpMax;
+}
+
+void Bird::setPos(const sf::Vector2f pos)
+{
+	this->sprite.setPosition(pos);
+}
+
+void Bird::setPos(const float x, const float y)
+{
+	this->sprite.setPosition(x, y);
+}
+
+void Bird::buffHp(const int value)
+{
+	this->hp += value;
+}
+
+void Bird::setHp(const int hp)
+{
+	this->hp = hp;
+}
+
+void Bird::loseHp(const int value)
+{
+	this->hp -= value;
+	if (this->hp < 0) this->hp = 0;
+}
+
+void Bird::update()
+{
+
+}
+
+void Bird::render(sf::RenderTarget& target)
+{
+	target.draw(this->sprite);
+}
+
+void Bird::move(const float dirX, const float dirY)
+{
+	this->sprite.move(this->moveSpeed * dirX, this->moveSpeed * dirY);
+}
+
+Bird::Bird()
+{
+	this->hpMax = 300;
+	this->hp = this->hpMax;
+	this->moveSpeed = 4.f;
 	this->initTexture();
 	this->initSprite();
 }
