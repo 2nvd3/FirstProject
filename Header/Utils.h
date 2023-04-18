@@ -1,56 +1,51 @@
 #pragma once
 
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Config.hpp>
-#include <SFML/Graphics.hpp>
 #include "GameConfig.h"
 #include "Enemy.h"
 #include "Diamond.h"
 #include "Character.h"
-#include <cmath>
-#include <iostream>
-#include <vector>
-#include <sstream>
-#include <string>
+#include "Background.h"
+#include "Music.h"
 
 class Game {
 private:
-	sf::RenderWindow* window;
-  
+	sf::RenderWindow window;
 	//player
-	Character* character;
-  
+	Character character;
+	Bird bird;
 	//enemy
 	std::vector<Enemy*> enemies;
-	float spawnTimer;
-	float spawnTimerMax;
-  
 	//diamond
 	std::vector<Diamond*> diamonds;
-	float spawnTimerdiamond;
-	float spawnTimerMaxdiamond;
-  
 	//system
 	unsigned points;
 	sf::Font font;
 	sf::Text pointTex;
 	sf::Text gameOverTex;
-  
+
+	sf::Texture texture_contents;
+	sf::Texture texture_tutor;
+	sf::Sprite content;
+	sf::Sprite tutor;
 	//background
-	sf::Texture backgroundTex;
-	sf::Sprite background;
-  
+
+	Background background;
+	int typeOfBackground;
+	std::vector<sf::Texture> Texture_Layers;
+	//sf::Texture backgroundTex;
+	//sf::Sprite background;
+
+	int typeOfMusic;
+	sf::Music Music;
+	std::vector<std::string> Name_Of_Songs;
+	
 	//playerGUI
 	sf::RectangleShape playerHp;
 	sf::RectangleShape playerHpBack;	
 
 	void initWindow();
-
-	void initEnemy();
-	void initDiamond();
-	void initCharacter();
-
+	void initMusic();
+	void initScreen();
 	void initBackground();
 
 	void initSystem();
@@ -61,12 +56,12 @@ public:
 	Game();
 
 	void run();
-  
 	void updatePollEvent();
 	void updateKey();
 	void updateGUI();
 	void update();
 	void updateBackground();
+	
 	void updateCollision();
 	
 	void updateEnemy();
@@ -75,4 +70,7 @@ public:
 	void render();
 	void renderBackground();
 	void renderGUI();
+
+	void DisplayScore();
+	void DisplayHealth();
 };
