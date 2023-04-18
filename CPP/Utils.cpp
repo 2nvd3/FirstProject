@@ -2,37 +2,42 @@
 
 void Game::initWindow()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::None);
-	this->window->setFramerateLimit(FRAMES);
-	this->window->setVerticalSyncEnabled(false);
+	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::None);
+	window.setFramerateLimit(FRAMES);
+	window.setVerticalSyncEnabled(false);
 }
 
-void Game::initCharacter()
+void Game::initScreen()
 {
-	this->character = new Character();
-}
-
-void Game::initEnemy()
-{
-	this->spawnTimerMax = 110.f;
-	this->spawnTimer = this->spawnTimerMax;
-}
-
-void Game::initDiamond()
-{
-	this->spawnTimerMaxdiamond = 110.f;
-	this->spawnTimerdiamond = this->spawnTimerMaxdiamond;
+	this->texture_contents.loadFromFile("Image/Screen/Content.png");
+	this->texture_tutor.loadFromFile("Image/Screen/Tutor.png");
+	this->content.setTexture(this->texture_contents);
+	this->tutor.setTexture(this->texture_tutor);
 }
 
 void Game::initBackground()
 {
-	this->backgroundTex.loadFromFile("Image/background.png");
-	this->background.setTexture(this->backgroundTex);
+	this->typeOfBackground = rand() % 4;
+	Texture_Layers = TextureLayers(typeOfBackground);
+	background.SetupBackground(&window, Texture_Layers, 1919);
+	//this->backgroundTex.loadFromFile("Image/Background.png");
+	//this->background.setTexture(this->backgroundTex);
 }
 
 void Game::initSystem()
 {
 	this->points = 0;
+}
+
+void Game::initMusic()
+{
+	this->typeOfMusic = rand() % 11;
+	Name_Of_Songs = SetMusics();
+	if (!Music.openFromFile(Name_Of_Songs[typeOfMusic]))
+	{
+		std::cout << "Musicn't";
+	}
+	Music.setLoop(true);
 }
 
 void Game::initGUI()
@@ -43,16 +48,17 @@ void Game::initGUI()
 	this->pointTex.setCharacterSize(30);
 	this->pointTex.setPosition(sf::Vector2f(10.f,5.f));
 	this->pointTex.setFillColor(sf::Color::Red);
+	//this->pointTex.setStyle(sf::Text::Bold);
 	this->pointTex.setString("Game Over!");
 
 	this->gameOverTex.setFont(this->font);
-	this->gameOverTex.setCharacterSize(60);
+	this->gameOverTex.setCharacterSize(100);
 	this->gameOverTex.setPosition(sf::Vector2f(10.f, 5.f));
 	this->gameOverTex.setFillColor(sf::Color::Red);
 	this->gameOverTex.setString("Game Over!");
 	this->gameOverTex.setPosition(
-		this->window->getSize().x / 2.f - this->gameOverTex.getGlobalBounds().width / 2.f,
-		this->window->getSize().y / 2.f - this->gameOverTex.getGlobalBounds().height / 2.f);
+		window.getSize().x / 2.f - this->gameOverTex.getGlobalBounds().width / 2.f,
+		window.getSize().y / 2.f - this->gameOverTex.getGlobalBounds().height / 2.f - 80.f);
 
 	//init playerGUI
 	this->playerHp.setSize(sf::Vector2f(200.f, 20.f));
@@ -70,18 +76,17 @@ void Game::updateGUI()
 	this->pointTex.setString(ss.str());
 
 	//updatePlayerGUI
-	float HpPercent = static_cast<float> (this->character->getHp()) / this->character->getHpMax();
+	float HpPercent = static_cast<float> (character.getHp()) / character.getHpMax();
 	this->playerHp.setSize(sf::Vector2f(200.f*HpPercent,this->playerHp.getSize().y));
 }
 		
 void Game::updateEnemy()
 {
 	//Spawning enemies
-	this->spawnTimer += 0.5f;
-	if (this->spawnTimer >= this->spawnTimerMax)
+	if (rand() % 55 == 0)
 	{
-		this->enemies.push_back(new Enemy(WINDOW_WIDTH, rand() % this->window->getSize().y));
-		this->spawnTimer = 0.f;
+		this->enemies.push_back(new Enemy(WINDOW_WIDTH, rand() % window.getSize().y));
+		window.setFramerateLimit(FRAMES);
 	}
 
 	//Update
@@ -89,18 +94,23 @@ void Game::updateEnemy()
 	for (auto *enemy: this->enemies)
 	{
 		enemy->update();
-
-		if (enemy->getBounds().left > this->window->getSize().x)
+		//Delete enemies
+		if (enemy->getBounds().left > window.getSize().x)
 		{
-			//Delete enemies
 			this->enemies.erase(this->enemies.begin() + counter);
+			window.setFramerateLimit(FRAMES);
 		}
 		//enemy player collision
-		else if (enemy->getBounds().intersects(this->character->getBounds()))
+		else if (enemy->getBounds().intersects(character.getBounds()))
 		{
 			//delete this->enemies.at(counter);
-			this->character->loseHp(this->enemies.at(counter)->getDamage());
+			character.loseHp(this->enemies.at(counter)->getDamage());
 			this->enemies.erase(this->enemies.begin() + counter);
+			window.setFramerateLimit(FRAMES);
+		}
+		else if(enemy->getBounds().intersects(bird.getBounds()))
+		{
+			character.loseHp(1000);
 		}
 
 		++counter;
@@ -110,11 +120,10 @@ void Game::updateEnemy()
 void Game::updateDiamond()
 {
 	//Spawning diamond
-	this->spawnTimerdiamond += 0.5f;
-	if (this->spawnTimerdiamond >= this->spawnTimerMaxdiamond)
+	if (rand() % 45 == 0)
 	{
-		this->diamonds.push_back(new Diamond(WINDOW_WIDTH, rand() % this->window->getSize().y));
-		this->spawnTimerdiamond = 0.f;
+		this->diamonds.push_back(new Diamond(WINDOW_WIDTH, rand() % window.getSize().y));
+		window.setFramerateLimit(FRAMES);
 	}
 
 	//Update
@@ -122,18 +131,19 @@ void Game::updateDiamond()
 	for (auto* diamond : this->diamonds)
 	{
 		diamond->update();
-
-		if (diamond->getBounds().left > this->window->getSize().x)
+		//Delete diamond
+		if (diamond->getBounds().left > window.getSize().x)
 		{
-			//Delete diamond
 			this->diamonds.erase(this->diamonds.begin() + counter);
+			window.setFramerateLimit(FRAMES);
 		}
-		else if (diamond->getBounds().intersects(this->character->getBounds()))
+		else if (diamond->getBounds().intersects(bird.getBounds()))
 		{
 			//delete this->enemies.at(counter);
 			this->points += this->diamonds.at(counter)->getPoints();
-			this->character->buffHp(this->diamonds.at(counter)->getPoints());
+			character.buffHp(this->diamonds.at(counter)->getPoints());
 			this->diamonds.erase(this->diamonds.begin() + counter);
+			window.setFramerateLimit(FRAMES);
 		}
 
 		++counter;
@@ -143,18 +153,23 @@ void Game::updateDiamond()
 void Game::updatePollEvent()
 {
 	sf::Event e;
-	while (this->window->pollEvent(e))
+	while (window.pollEvent(e))
 	{
 		switch (e.type)
 		{
+		//case sf::Event::LostFocus:
+		//	window.pause();
+		//case sf::Event::GainedFocus:
+		//	window.resume();
 		case sf::Event::Closed():
-			this->window->close();
+			window.close();
 			break;
 		case sf::Event::KeyPressed:
 			switch (e.key.code) 
 			{
 			case sf::Keyboard::Escape:
-				this->window->close();
+				window.close();
+				break;
 			}
 		}
 	}
@@ -163,20 +178,30 @@ void Game::updatePollEvent()
 void Game::updateKey()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		this->character->move(-1.f, 0.f);
+		character.move(-1.4f, 0.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		this->character->move(1.f, 0.f);
+		character.move(1.f, 0.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		this->character->move(0.f, -1.f);
+		character.move(0.f, -1.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		this->character->move(0.f, 1.f);
+		character.move(0.f, 1.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		bird.move(-1.4f, 0.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		bird.move(1.f, 0.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		bird.move(0.f, -1.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		bird.move(0.f, 1.f);
 }
 
 void Game::update()
 {
+	this->updateBackground();
+
 	this->updateKey();
 
-	this->character->update();
+	character.update();
 
 	this->updateCollision();
 
@@ -185,6 +210,8 @@ void Game::update()
 	this->updateDiamond();
 
 	this->updateGUI();
+	if (character.getHp() <= 0) Music.pause();
+
 }
 
 void Game::updateBackground()
@@ -193,73 +220,97 @@ void Game::updateBackground()
 
 void Game::updateCollision()
 {
-	//left
-	if (this->character->getBounds().left < 0.f)
+	//left Character
+	if (character.getBounds().left < 0.f)
 	{
-		this->character->setPos(0.f, this->character->getBounds().top);
+		character.setPos(0.f, character.getBounds().top);
 	}
 	//right
-	else if (this->character->getBounds().left + this->character->getBounds().width > this->window->getSize().x)
+	else if (character.getBounds().left + character.getBounds().width > window.getSize().x)
 	{
-		this->character->setPos(this->window->getSize().x - this->character->getBounds().width , this->character->getBounds().top);
+		character.setPos(window.getSize().x - character.getBounds().width , character.getBounds().top);
 	}
 	//top
-	if (this->character->getBounds().top < 0.f)
+	if (character.getBounds().top < 0.f)
 	{
-		this->character->setPos(this->character->getBounds().left, 0.f);
+		character.setPos(character.getBounds().left, 0.f);
 	}
 	//bottom	
-	else if (this->character->getBounds().top + this->character->getBounds().height > this->window->getSize().y)
+	else if (character.getBounds().top + character.getBounds().height > window.getSize().y)
 	{
-		this->character->setPos(this->character->getBounds().left, this->window->getSize().y - this->character->getBounds().height);
+		character.setPos(character.getBounds().left, window.getSize().y - character.getBounds().height);
 	}
 	
+	//left Bird
+	if (bird.getBounds().left < 0.f)
+	{
+		bird.setPos(0.f, bird.getBounds().top);
+	}
+	//right
+	else if (bird.getBounds().left + bird.getBounds().width > window.getSize().x)
+	{
+		bird.setPos(window.getSize().x - bird.getBounds().width, bird.getBounds().top);
+	}
+	//top
+	if (bird.getBounds().top < 0.f)
+	{
+		bird.setPos(bird.getBounds().left, 0.f);
+	}
+	//bottom	
+	else if (bird.getBounds().top + bird.getBounds().height > window.getSize().y)
+	{
+		bird.setPos(bird.getBounds().left, window.getSize().y - bird.getBounds().height);
+	}
 }
 
 void Game::render()
 {
-	this->window->clear();
+	window.clear();
 
+	window.draw(content);
+	//window.draw(tutor);
 	this->renderBackground();
+	character.render(window);
+	bird.render(window);
 
-	this->character->render(*this->window);
-	
-	
 	for (auto* enemy : this->enemies)
 	{
 		enemy->render(this->window);
+		window.setFramerateLimit(FRAMES);
 	}
-
+	
 	for (auto* diamond : this->diamonds)
 	{
-		diamond->render(this->window);
+		diamond->render(&window);
+		window.setFramerateLimit(FRAMES);
 	}
 
 	this->renderGUI();
 
-	if (this->character->getHp() <= 0) this->window->draw(this->gameOverTex);
-
-	this->window->display();
+	if (character.getHp() <= 0) window.draw(this->gameOverTex);
+		
+	window.display();
 }
 
 void Game::renderBackground()
 {
-	this->window->draw(this->background);
+	background.MoveandDisplay();
 }
 
 void Game::renderGUI()
 {
-	this->window->draw(this->pointTex);
-	this->window->draw(this->playerHpBack);
-	this->window->draw(this->playerHp);
+	window.draw(this->pointTex);
+	window.draw(this->playerHpBack);
+	window.draw(this->playerHp);
 }
 
 void Game::run()
 {
-	while (this->window->isOpen())
+	Music.play();
+	while (window.isOpen())
 	{
 		this->updatePollEvent();
-		if (this->character->getHp() > 0)
+		if (character.getHp() > 0)
 		{
 			this->update();
 			this->render();
@@ -269,11 +320,10 @@ void Game::run()
 
 Game::Game()
 {
+	this->initMusic();
 	this->initWindow();
-	this->initCharacter();
+	this->initScreen();
 	this->initBackground();
-	this->initEnemy();
-	this->initDiamond();
 	this->initSystem();
 	this->initGUI();
 }
