@@ -3,10 +3,17 @@
 
 # NHỮNG CHỨC NĂNG ĐÃ HOÀN THÀNH:
   +Tạo window
+  
   +Tạo nhân vật và tạo hình
+  
   +Tạo kẻ địch và tạo hình
+  
   +Tạo vật phẩm và tạo hình
+  
   +Tạo background
+  
   +Di chuyển nhân vật
+  
   +Spawn vật phẩm và kẻ địch
+  
   +Tạo health, point text
