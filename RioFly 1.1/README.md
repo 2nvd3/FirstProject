@@ -5,8 +5,8 @@
 //Update
    +Thêm nhân vật
 
-   +Tạo animation cho background
+   +Tạo animation cho background và mỗi lần chơi lại sẽ hiện 1 kiểu background khác
 
-   +Thêm nhạc
+   +Thêm nhạc cho và mỗi lần chơi lại sẽ random ra 1 bài khác bài trước
 
    +Dồn nhân vật vào chung 1 file
