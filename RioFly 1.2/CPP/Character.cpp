@@ -1,9 +1,6 @@
 #include "../Header/Character.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Character
-
 void Character::initTexture(std::string& link)
 {
 	this->texture.loadFromFile(link);
@@ -142,10 +139,7 @@ Character::Character()
 	this->initAnimation();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Bird
-
 void Bird::initTexture(std::string &link)
 {
 	this->texture.loadFromFile(link);
@@ -257,14 +251,21 @@ Bird::Bird()
 	this->initAnimation();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Enemy
-
 void Enemy::initTex(std::string& link)
 {	
 	this->enemyTex.loadFromFile(link);
 	this->enemyTex.setSmooth(true);
+}
+
+float Enemy::getPosX()
+{
+	return this->enemySprite.getPosition().x;
+}
+
+float Enemy::getPosY()
+{
+	return this->enemySprite.getPosition().y;
 }
 
 void Enemy::initVari()
@@ -330,10 +331,7 @@ Enemy::Enemy(float pos_x, float pos_y)
 	this->enemySprite.setPosition(pos_x, pos_y);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Diamond
-
 void Diamond::initTex()
 {
 	this->diamondTex.loadFromFile("Image/Character/dias.png");
@@ -414,13 +412,10 @@ Diamond::Diamond(float pos_x, float pos_y)
 	this->diamondSprite.setPosition(pos_x, pos_y);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Rocket
-
 void Rocket::initTex()
 {
-	this->rocketTex.loadFromFile("Image/Character/rocket1.png");
+	this->rocketTex.loadFromFile("Image/Character/rocket.png");
 	this->currentFrame = sf::IntRect(0, 0, 161, 65);
 	this->rocketTex.setSmooth(true);
 }
@@ -434,7 +429,7 @@ void Rocket::initSprite()
 
 void Rocket::initVari()
 {
-	this->speed = 18;
+	this->speed = 16;
 	this->damage = 80;
 }
 
@@ -492,113 +487,136 @@ void Rocket::render(sf::RenderTarget& target)
 	target.draw(this->rocketSprite);
 }
 
-void Rocket::Catch(float sec_x, float sec_y, float sec_speed, bool sec_alive)
+void Rocket::Catch(float birdPosX, float birdPosY, bool birdAlive)
 {
-	int range = 9;
 	this->posY = this->getPosY();
 	this->posX = this->getPosX();
-	int alpha_Second_Rocket = atan(abs(this->posY - sec_y) / abs(this->posX - sec_x)) * 180 / PI;
-
-	if (abs(sec_y - this->posY) > 10 && sec_y > this->posY && sec_alive && sec_x <= this->posX)
+	int alpha_Second_Rocket = atan(abs(this->posY - birdPosY) / abs(this->posX - birdPosX)) * 180 / PI;
+	if (abs(birdPosY - this->posY) > 0 && birdPosY > this->posY && birdAlive && birdPosX <= this->posX)
 	{
 		alpha_Second_Rocket = -(alpha_Second_Rocket);
-		this->posY += sec_speed / ((rand() % 5) + 5);
 		if (alpha > alpha_Second_Rocket) alpha -= alphaSpeed;
 		else if (alpha < alpha_Second_Rocket) alpha += alphaSpeed;
 	}
 	else {
-		if (abs(sec_y - this->posY) > 10 && sec_y < this->posY && sec_alive && sec_x <= this->posX) 
+		if (abs(birdPosY - this->posY) > 10 && birdPosY < this->posY && birdAlive && birdPosX <= this->posX)
 		{
-			this->posY -= sec_speed / ((rand() % 5) + 5);
 			if (alpha > alpha_Second_Rocket) alpha -= alphaSpeed;
 			else if (alpha < alpha_Second_Rocket) alpha += alphaSpeed;
-		}
-		else if ((sec_y == this->posY || sec_x > this->posX) && abs(sec_y - this->posY) <= 10)
-		{
-			if (static_cast<int>(alpha) > 0) alpha -= alphaSpeed;
-			else if (static_cast<int>(alpha) < 0) alpha += alphaSpeed;
 		}
 	}
 	this->rocketSprite.setRotation(alpha);
 }
 
-void Rocket::update(float sec_x, float sec_y, float sec_speed, bool sec_alive)
+void Rocket::update(float birdPosX, float birdPosY, bool birdAlive)
 {
-	Catch(sec_x, sec_y, sec_speed, sec_alive);
-	this->rocketSprite.move(-this->speed, 0);
+	Catch(birdPosX, birdPosY, birdAlive);
+	if (alpha > 0) {
+		this->rocketSprite.move(-this->speed, rand() % 4 - 5);
+	}
+	else this->rocketSprite.move(-this->speed, rand() % 5);
 	this->updateAnimation();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Collision
-
-void Collision::initTex()
+//Collision with diamond
+void CollisionDiamond::initTex()
 {
-	this->collisionTex.loadFromFile("Image/Character/diamondcollision - Copy.png");
+	this->collisionTex.loadFromFile("Image/Character/diamondcollision.png");
 	this->currentFrame = sf::IntRect(0, 0, 64, 64);
 	this->collisionTex.setSmooth(true);
 }
 
-void Collision::initVari()
-{
-	this->PointCount = rand() % 50 + 25;
-	this->speed = rand() % 5 + 3;
-	this->points = this->PointCount;
-}
-
-void Collision::initAnimation()
+void CollisionDiamond::initAnimation()
 {
 	this->timer.restart();
 }
 
-void Collision::initSprite()
+void CollisionDiamond::initSprite()
 {
 	this->collisionSprite.setTexture(this->collisionTex);
 	this->collisionSprite.setTextureRect(this->currentFrame);
-	this->collisionSprite.setScale(1.1f, 1.1f);
+	this->collisionSprite.setScale(2.f, 2.f);
 }
 
-const sf::FloatRect Collision::getBounds() const
+void CollisionDiamond::update()
 {
-	return this->collisionSprite.getGlobalBounds();
-}
-
-void Collision::update()
-{
-	this->collisionSprite.move(-this->speed, 0);
 	this->updateAnimation();
 }
 
-void Collision::updateAnimation()
+void CollisionDiamond::updateAnimation()
 {
 	if (this->timer.getElapsedTime().asSeconds() >= 0.02f)
 	{
 		this->currentFrame.left += 64.f;
-		if (this->currentFrame.left >= 960.f)
-		{
-			this->currentFrame.left = 0;
-		}
 		this->timer.restart();
 		this->collisionSprite.setTextureRect(this->currentFrame);
 	}
 }
 
-void Collision::render(sf::RenderTarget& target)
+void CollisionDiamond::render(sf::RenderTarget& target)
 {
 	target.draw(this->collisionSprite);
 }
 
-const int& Collision::getPoints() const
+bool CollisionDiamond::renderer(sf::RenderTarget& target)
 {
-	return this->points;
+	target.draw(this->collisionSprite);
+	if (this->currentFrame.left == 960) return true;
+	return false;
 }
 
-Collision::Collision(float pos_x, float pos_y)
+CollisionDiamond::CollisionDiamond(float pos_x, float pos_y)
 {
 	this->initTex();
 	this->initSprite();
-	this->initVari();
+	this->initAnimation();
+	this->collisionSprite.setPosition(pos_x, pos_y);
+}
+
+//Collision with enemy
+void CollisionEnemy::initTex()
+{
+	this->collisionTex.loadFromFile("Image/Character/enemycollision.png");
+	this->currentFrame = sf::IntRect(0, 0, 64, 64);
+	this->collisionTex.setSmooth(true);
+}
+
+void CollisionEnemy::initAnimation()
+{
+	this->timer.restart();
+}
+
+void CollisionEnemy::initSprite()
+{
+	this->collisionSprite.setTexture(this->collisionTex);
+	this->collisionSprite.setTextureRect(this->currentFrame);
+	this->collisionSprite.setScale(2.f, 2.f);
+}
+
+void CollisionEnemy::update()
+{
+	this->updateAnimation();
+}
+
+void CollisionEnemy::updateAnimation()
+{
+	if (this->timer.getElapsedTime().asSeconds() >= 0.02f)
+	{
+		this->currentFrame.left += 64.f;
+		this->timer.restart();
+		this->collisionSprite.setTextureRect(this->currentFrame);
+	}
+}
+
+void CollisionEnemy::render(sf::RenderTarget& target)
+{
+	target.draw(this->collisionSprite);
+}
+
+CollisionEnemy::CollisionEnemy(float pos_x, float pos_y)
+{
+	this->initTex();
+	this->initSprite();
 	this->initAnimation();
 	this->collisionSprite.setPosition(pos_x, pos_y);
 }
@@ -615,11 +633,4 @@ bool collision(float posX_1, float posY_1, float scale_1, float width_1, float h
 	if (_First_br.y < _Second_tl.y || _First_tl.y > _Second_br.y) return false;
 
 	return true;
-}
-
-bool SmalltoDiamond(Bird bird, Diamond diamond, float scale_1, float width_1, float height_1, float scale_2, float width_2, float height_2)
-{
-	if (collision(bird.getPosX(), bird.getPosY(), scale_1, width_1, height_1,
-		diamond.getPosX(), diamond.getPosY(), scale_2, width_2, height_2)) return true;
-	return false;
 }
