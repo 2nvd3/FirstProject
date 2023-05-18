@@ -1,4 +1,3 @@
-
 #pragma once
 
 #pragma warning(disable : 4244)
@@ -134,6 +133,9 @@ public:
 	
 	void initTex(std::string& link);
 
+	float getPosX();
+	float getPosY();
+
 	void update();
 	void updateAnimation();
 	void render(sf::RenderTarget& target);
@@ -195,7 +197,7 @@ private:
 	float posY;
 
 	float alpha = 0;
-	float alphaSpeed = 5;
+	float alphaSpeed = 4;
 
 	//private function
 	void initTex();
@@ -212,14 +214,14 @@ public:
 	float getPosX();
 	float getPosY();
 
-	void update(float sec_x, float sec_y, float sec_speed, bool sec_alive);
+	void update(float birdPosX, float birdPosY, bool birdAlive);
 	void updateAnimation();
 	void render(sf::RenderTarget& target);
 
-	void Catch(float sec_x, float sec_y, float sec_speed, bool sec_alive);
+	void Catch(float birdPosX, float birdPosY, bool birdAlive);
 };
 
-class Collision
+class CollisionDiamond
 {
 private:
 	//texture
@@ -231,31 +233,47 @@ private:
 	sf::Clock timer;
 
 	//variables
-	int points;
-	unsigned PointCount;
-	float speed;
 	float posX;
 	float posY;
 
 	//private function
 	void initTex();
 	void initSprite();
-	void initVari();
 	void initAnimation();
 public:
-	Collision(float pos_x, float pos_y);
+	CollisionDiamond(float pos_x, float pos_y);
 
-	const sf::FloatRect getBounds() const;
+	void update();
+	void updateAnimation();
+	void render(sf::RenderTarget& target);
+	bool renderer(sf::RenderTarget& target);
+};
 
-	const int& getPoints() const;
+class CollisionEnemy
+{
+private:
+	//texture
+	sf::Texture collisionTex;
+	sf::Sprite collisionSprite;
+
+	//animation
+	sf::IntRect currentFrame;
+	sf::Clock timer;
+
+	//variables
+	float posX;
+	float posY;
+
+	//private function
+	void initTex();
+	void initSprite();
+	void initAnimation();
+public:
+	CollisionEnemy(float pos_x, float pos_y);
 
 	void update();
 	void updateAnimation();
 	void render(sf::RenderTarget& target);
 };
 
-bool collision(float posX_1, float posY_1, float scale_1, float width_1, float height_1,
-	float posX_2, float posY_2, float scale_2, float width_2, float height_2);
-
-bool SmalltoDiamond(Bird bird, Diamond diamond, float scale_1, float width_1,
-	float height_1, float scale_2, float width_2, float height_2);
+bool collision(float posX_1, float posY_1, float scale_1, float width_1, float height_1, float posX_2, float posY_2, float scale_2, float width_2, float height_2);
