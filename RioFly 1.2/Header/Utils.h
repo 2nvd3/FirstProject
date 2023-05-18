@@ -1,6 +1,6 @@
-
 #pragma once
 
+#pragma warning (disable : 4018)
 #pragma warning (disable : 4353)
 
 #include "GameConfig.h"
@@ -14,42 +14,42 @@ private:
 	sf::RenderWindow window;
 	sf::Event e;
 
-	//item
-	sf::Texture textureScreenBegin;
-	sf::Texture textureScreenEnd;
-	sf::Texture texture_play_unchoose;
-	sf::Texture texture_play_choosen;
-	sf::Texture texture_replay_unchoose;
-	sf::Texture texture_replay_choosen;
-	sf::Texture texture_music_on;
-	sf::Texture texture_music_off;
-	sf::Texture texture_exit_on;
-	sf::Texture texture_exit_off;
-	sf::Texture texture_contents;
-	sf::Texture texture_next_choosen;
-	sf::Texture texture_next_unchoose;
-	sf::Texture texture_tutor;
-	sf::Texture texture_pausing_screen;
+	//SetUp
+	sf::Texture begin_scr;
+	sf::Texture end_scr;
+	sf::Texture unchoose_button;
+	sf::Texture choose_button;
+	sf::Texture replay_unchoose_button;
+	sf::Texture replay_choose_button;
+	sf::Texture music_on_button;
+	sf::Texture music_off_button;
+	sf::Texture exit_on_button;
+	sf::Texture exit_off_button;
+	sf::Texture content;
+	sf::Texture tutorial;
+	sf::Texture next_choose_button;
+	sf::Texture next_unchoose_button;
+	sf::Texture pausing_scr;
 
 	sf::Sprite sprite_pausing_screen;
 
 	sf::Sprite  play_button;
-	sf::Sprite  screenBegin;
+	sf::Sprite  begin_screen;
 	sf::Sprite  exit_button;
 	sf::Sprite  music_button;
 
-	bool Music_On = true;
-	bool at_content = true;
-	bool inScreen = true;
+	bool music_on = true;
+	bool in_content = true;
+	bool in_screen = true;
 
 	sf::Vector2f but_pos;
 
-	//texture
+	//Characters texture
 	std::string linkred;
 	std::string linkrio;
 	std::string linkenemy;
 
-	//player
+	//Character
 	Character character;
 	Bird bird;
 	int respawn = 0;
@@ -64,7 +64,9 @@ private:
 	std::vector<Rocket*> rockets;
 
 	//collision
-	std::vector<Collision*> collisions;
+	std::vector<CollisionDiamond*> coldiamond;
+	std::vector<CollisionEnemy*> colenemy;
+	std::vector<CollisionEnemy*> colrocket;
 
 	//system
 	unsigned points = 0;
@@ -85,17 +87,7 @@ private:
 	
 	//playerGUI
 	sf::RectangleShape playerHp;
-	sf::RectangleShape playerHpBack;	
-
-	void initWindow();
-
-	void initMusic();
-
-	void initBackground();
-
-	void initSystem();
-
-	void initGUI();
+	sf::RectangleShape playerHpBack;
 public:
 	Game();
 
@@ -109,17 +101,7 @@ public:
 
 	void reset();
 
-	void run();
-
-	void updatePollEvent();
-
-	void updateKey();
-
 	void updateGUI();
-
-	void update();
-
-	void updateBackground();
 	
 	void updateCollision();
 	
@@ -130,10 +112,6 @@ public:
 	void updateRocket();
 
 	void updateNewCollision();
-	
-	void render();
-
-	void renderBackground();
 
 	void renderGUI();
 };
