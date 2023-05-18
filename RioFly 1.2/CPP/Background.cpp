@@ -2,53 +2,53 @@
 
 std::vector<sf::Texture> TextureLayers(int typeOfBackground)
 {
-	std::vector<sf::Texture> temp_Vector;
+	std::vector<sf::Texture> tex_vex;
 	sf::Texture temp_Texture;
 
 	if (typeOfBackground == 0)
 	{
-		temp_Texture.loadFromFile("Image/LayerBackground/0.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/1.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/2.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/3.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/4.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/5.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/6.png"); temp_Vector.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/0.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/1.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/2.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/3.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/4.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/5.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/6.png"); tex_vex.push_back(temp_Texture);
 	}
 
 	if (typeOfBackground == 1)
 	{
-		temp_Texture.loadFromFile("Image/LayerBackground/7.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/8.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/9.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/10.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/11.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/12.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/13.png"); temp_Vector.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/7.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/8.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/9.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/10.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/11.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/12.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/13.png"); tex_vex.push_back(temp_Texture);
 	}
 
 	if (typeOfBackground == 2)
 	{
-		temp_Texture.loadFromFile("Image/LayerBackground/14.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/15.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/16.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/17.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/18.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/19.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/20.png"); temp_Vector.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/14.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/15.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/16.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/17.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/18.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/19.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/20.png"); tex_vex.push_back(temp_Texture);
 	}
 
 	if (typeOfBackground == 3)
 	{
-		temp_Texture.loadFromFile("Image/LayerBackground/21.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/22.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/23.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/24.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/25.png"); temp_Vector.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/26.png"); temp_Vector.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/21.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/22.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/23.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/24.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/25.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/26.png"); tex_vex.push_back(temp_Texture);
 	}
 	temp_Texture.setSmooth(true);
-	return temp_Vector;
+	return tex_vex;
 }
 
 void Background::SetupBackground(sf::RenderWindow* window, std::vector<sf::Texture>& Textures, int layer_width)
@@ -61,7 +61,7 @@ void Background::SetupBackground(sf::RenderWindow* window, std::vector<sf::Textu
 		Layer temp_Layer;
 		sf::Sprite temp_sprite(Textures[i]);
 		this->window->draw(temp_sprite);
-		temp_Layer.speed = i * 0.3f;        //Set layer move speed
+		temp_Layer.speed = i * 0.3f;//Set layer move speed
 		temp_Layer.layer_pos_x[0] = 0;
 		temp_Layer.layer_pos_x[1] = this->layer_width;
 		temp_Layer.sprite_array[0] = temp_Layer.sprite_array[1] = temp_sprite;
