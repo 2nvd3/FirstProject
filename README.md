@@ -1,5 +1,5 @@
 # FirstProject
--Game: Rio Fly (Version 1.0)
+-Game: Rio Fly
 
 -Cre: Nguyễn Việt Dũng
 
