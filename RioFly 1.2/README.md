@@ -1,5 +1,5 @@
 
-//Version 1.2 (Completed /05/2023)
+//Version 1.2 (15/05/2023)
 
 # RIO FLY PHIÊN BẢN 1.2
 # NHỮNG CHỨC NĂNG ĐÃ HOÀN THÀNH:
