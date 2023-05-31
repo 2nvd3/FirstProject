@@ -1,13 +1,13 @@
 #include "../Header/Character.h"
 
-//Character
-void Character::initTexture(std::string& link)
+//Red
+void Red::initTexture(std::string& link)
 {
 	this->texture.loadFromFile(link);
 	this->texture.setSmooth(true);
 }
 
-void Character::initSprite()
+void Red::initSprite()
 {
 	this->sprite.setTexture(this->texture);
 	this->currentFrame = sf::IntRect(0, 0, 63.285, 55);
@@ -17,69 +17,69 @@ void Character::initSprite()
 	this->sprite.setOrigin(31.6425f, 27.5f);
 }
 
-void Character::initAnimation()
+void Red::initAnimation()
 {
 	this->timer.restart();
 }
 
-const sf::FloatRect Character::getBounds() const
+const sf::FloatRect Red::getBounds() const
 {
 	return this->sprite.getGlobalBounds();
 }
 
-const int& Character::getHp() const
+const int& Red::getHp() const
 {
 	return this->hp;
 }
 
-const int& Character::getHpMax() const
+const int& Red::getHpMax() const
 {
 	return this->hpMax;
 }
 
-float Character::getPosX()
+float Red::getPosX()
 {
 	return this->sprite.getPosition().x;
 }
 
-float Character::getPosY()
+float Red::getPosY()
 {
 	return this->sprite.getPosition().y;
 }
 
-void Character::setPos(const sf::Vector2f pos)
+void Red::setPos(const sf::Vector2f pos)
 {
 	this->sprite.setPosition(pos);
 }
 
-void Character::setPos(const float x, const float y)
+void Red::setPos(const float x, const float y)
 {
 	this->sprite.setPosition(x, y);
 }
 
-void Character::buffHp(const int value)
+void Red::buffHp(const int value)
 {
 	this->hp += value;
 }
 
-void Character::setHp(const int hp)
+void Red::setHp(const int hp)
 {
 	this->hp = hp;
 }
 
-void Character::loseHp(const int value)
+void Red::loseHp(const int value)
 {
 	this->hp -= value;
 	if (this->hp < 0) this->hp = 0;
 }
 
-void Character::update()
+void Red::update()
 {
 	this->updateMove();
 	this->updateAnimation();
 }
 
-void Character::updateAnimation()
+void Red::updateAnimation()
 {
 	if (this->timer.getElapsedTime().asSeconds() >= 0.09f)
 	{
@@ -93,12 +93,12 @@ void Character::updateAnimation()
 	}
 }
 
-void Character::render(sf::RenderTarget* target)
+void Red::render(sf::RenderTarget* target)
 {
 	target->draw(this->sprite);
 }
 
-void Character::updateMove()
+void Red::updateMove()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		this->sprite.move(-this->moveSpeed, 0.f);
@@ -124,12 +124,12 @@ void Character::updateMove()
 	this->sprite.setRotation(alpha);
 }
 
-void Character::move(const float dirX, const float dirY)
+void Red::move(const float dirX, const float dirY)
 {
 	this->sprite.move(this->moveSpeed * dirX, this->moveSpeed * dirY);
 }
 
-Character::Character()
+Red::Red()
 {
 	this->hpMax = 300;
 	this->hp = this->hpMax;
@@ -139,24 +139,24 @@ Character::Character()
 	this->initAnimation();
 }
 
-//Bird
-void Bird::initTexture(std::string &link)
+//Rio
+void Rio::initTexture(std::string &link)
 {
 	this->texture.loadFromFile(link);
 	this->texture.setSmooth(true);
 }
 
-float Bird::getPosX()
+float Rio::getPosX()
 {
 	return this->sprite.getPosition().x;
 }
 
-float Bird::getPosY()
+float Rio::getPosY()
 {
 	return this->sprite.getPosition().y;
 }
 
-void Bird::initSprite()
+void Rio::initSprite()
 {
 	this->sprite.setTexture(this->texture);
 	this->currentFrame = sf::IntRect(0, 0, 191, 140);
@@ -167,33 +167,33 @@ void Bird::initSprite()
 	this->sprite.setPosition(100, 450);
 }
 
-void Bird::initAnimation()
+void Rio::initAnimation()
 {
 	this->timer.restart();
 }
 
-const sf::FloatRect Bird::getBounds() const
+const sf::FloatRect Rio::getBounds() const
 {
 	return this->sprite.getGlobalBounds();
 }
 
-void Bird::setPos(const sf::Vector2f pos)
+void Rio::setPos(const sf::Vector2f pos)
 {
 	this->sprite.setPosition(pos);
 }
 
-void Bird::setPos(const float x, const float y)
+void Rio::setPos(const float x, const float y)
 {
 	this->sprite.setPosition(x, y);
 }
 
-void Bird::update()
+void Rio::update()
 {
 	this->updateMove();
 	this->updateAnimation();
 }
 
-void Bird::updateMove()
+void Rio::updateMove()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		this->sprite.move(-7.5f, 0.f);
@@ -218,7 +218,7 @@ void Bird::updateMove()
 	this->sprite.setRotation(alpha);
 }
 
-void Bird::updateAnimation()
+void Rio::updateAnimation()
 {
 	if (this->timer.getElapsedTime().asSeconds() >= 0.12f)
 	{
@@ -233,17 +233,17 @@ void Bird::updateAnimation()
 	}
 }
 
-void Bird::render(sf::RenderTarget* target)
+void Rio::render(sf::RenderTarget* target)
 {
 	target->draw(this->sprite);
 }
 
-void Bird::move(const float dirX, const float dirY)
+void Rio::move(const float dirX, const float dirY)
 {
 	this->sprite.move(this->speed * dirX, this->speed * dirY);
 }
 
-Bird::Bird()
+Rio::Rio()
 {
 	this->speed = 4;
 	this->initTexture(this->link);
@@ -487,30 +487,30 @@ void Rocket::render(sf::RenderTarget& target)
 	target.draw(this->rocketSprite);
 }
 
-void Rocket::Catch(float birdPosX, float birdPosY, bool birdAlive)
+void Rocket::Catch(float rioPosX, float rioPosY, bool rioAlive)
 {
 	this->posY = this->getPosY();
 	this->posX = this->getPosX();
-	int alpha_Second_Rocket = atan(abs(this->posY - birdPosY) / abs(this->posX - birdPosX)) * 180 / PI;
-	if (abs(birdPosY - this->posY) > 0 && birdPosY > this->posY && birdAlive && birdPosX <= this->posX)
+	int alpha_Rocket = atan(abs(this->posY - rioPosY) / abs(this->posX - rioPosX)) * 180 / PI;//change radians to degrees
+	if (abs(rioPosY - this->posY) > 0 && rioPosY > this->posY && rioAlive && rioPosX <= this->posX)
 	{
-		alpha_Second_Rocket = -(alpha_Second_Rocket);
-		if (alpha > alpha_Second_Rocket) alpha -= alphaSpeed;
-		else if (alpha < alpha_Second_Rocket) alpha += alphaSpeed;
+		alpha_Rocket = -(alpha_Rocket);
+		if (alpha > alpha_Rocket) alpha -= alphaSpeed;
+		else if (alpha < alpha_Rocket) alpha += alphaSpeed;
 	}
 	else {
-		if (abs(birdPosY - this->posY) > 10 && birdPosY < this->posY && birdAlive && birdPosX <= this->posX)
+		if (abs(rioPosY - this->posY) > 10 && rioPosY < this->posY && rioAlive && rioPosX <= this->posX)
 		{
-			if (alpha > alpha_Second_Rocket) alpha -= alphaSpeed;
-			else if (alpha < alpha_Second_Rocket) alpha += alphaSpeed;
+			if (alpha > alpha_Rocket) alpha -= alphaSpeed;
+			else if (alpha < alpha_Rocket) alpha += alphaSpeed;
 		}
 	}
 	this->rocketSprite.setRotation(alpha);
 }
 
-void Rocket::update(float birdPosX, float birdPosY, bool birdAlive)
+void Rocket::update(float rioPosX, float rioPosY, bool rioAlive)
 {
-	Catch(birdPosX, birdPosY, birdAlive);
+	Catch(rioPosX, rioPosY, rioAlive);
 	if (alpha > 0) {
 		this->rocketSprite.move(-this->speed, rand() % 4 - 5);
 	}
