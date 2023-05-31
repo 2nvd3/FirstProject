@@ -15,6 +15,6 @@ int gameStart(sf::RenderWindow* window, sf::Texture& play_choose_button, sf::Tex
 int gameReplay(sf::RenderWindow* window, sf::Texture& replay_choose_button, sf::Texture& replay_unchoose_button,
     sf::Event* e, sf::Texture& end_scr, int point, float text_pos_x, float text_pos_y, sf::Font& font);
 
-int Contents_And_Tutor(sf::RenderWindow* window, sf::Event* e, sf::Texture& content, sf::Texture& tutorial,
-    Character* character, Bird* bird, Background* background, sf::Texture& next_choose_button,
+int Plots(sf::RenderWindow* window, sf::Event* e, sf::Texture& content, sf::Texture& tutorial,
+    Red* red, Rio* rio, Background* background, sf::Texture& next_choose_button,
     sf::Texture& next_unchoose_button, bool& in_content, sf::Vector2f& but_pos);
