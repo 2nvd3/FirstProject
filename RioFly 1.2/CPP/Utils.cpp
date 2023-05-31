@@ -15,10 +15,10 @@ void Game::updateGUI()
 	this->playerHpTex.setCharacterSize(30);
 	this->playerHpTex.setOrigin(0.f, 0.f);
 	this->playerHpTex.setPosition(sf::Vector2f(12.f, 900.f));
-	if (this->character.getHp() <= 100) playerHpTex.setFillColor(sf::Color(253, 88, 88, 255));
+	if (this->red.getHp() <= 100) playerHpTex.setFillColor(sf::Color(253, 88, 88, 255));
 	else this->playerHpTex.setFillColor(sf::Color::White);
 	this->playerHpTex.setString("");
-	
+
 	this->playerHp.setSize(sf::Vector2f(200.f, 20.f));
 	this->playerHp.setFillColor(sf::Color::Red);
 	this->playerHp.setPosition(sf::Vector2f(12.f, 950.f));
@@ -30,13 +30,13 @@ void Game::updateGUI()
 	ss << this->points;
 	this->pointTex.setString(ss.str());
 
-	//Red's HP count
+	//Red's HP
 	std::stringstream sss;
-	sss << "Health: " << character.getHp();
+	sss << "Health: " << red.getHp();
 	this->playerHpTex.setString(sss.str());
 
 	//Red's HP GUI
-	float HpPercent = static_cast<float> (character.getHp()) / character.getHpMax();
+	float HpPercent = static_cast<float> (red.getHp()) / red.getHpMax();
 	this->playerHp.setSize(sf::Vector2f(200.f * HpPercent, this->playerHp.getSize().y));
 
 }
@@ -60,17 +60,17 @@ void Game::updateEnemy()
 		{
 			enemies.erase(enemies.begin() + i);
 		}
-		else if (enemies[i]->getBounds().intersects(character.getBounds()))
+		else if (enemies[i]->getBounds().intersects(red.getBounds()))
 		{
-			if (character.alive)
+			if (red.alive)
 			{
-				character.loseHp(enemies[i]->getDamage());
+				red.loseHp(enemies[i]->getDamage());
 				enemies.erase(enemies.begin() + i);
 			}
 		}
-		else if (enemies[i]->getBounds().intersects(bird.getBounds()))
+		else if (enemies[i]->getBounds().intersects(rio.getBounds()))
 		{
-			bird.alive = false;
+			rio.alive = false;
 		}
 		i--;
 	}
@@ -88,23 +88,23 @@ void Game::updateRocket()
 	int i = rockets.size() - 1;
 	while (i >= 0)
 	{
-		rockets[i]->update(bird.getPosX(), bird.getPosY(), bird.alive);
+		rockets[i]->update(rio.getPosX(), rio.getPosY(), rio.alive);
 		//delete rocket
 		if (rockets[i]->getPosX() < -20)
 		{
 			this->rockets.erase(this->rockets.begin() + i);
 		}
-		else if (rockets[i]->getBounds().intersects(character.getBounds()))
+		else if (rockets[i]->getBounds().intersects(red.getBounds()))
 		{
-			if (character.alive)
+			if (red.alive)
 			{
-				character.loseHp(rockets[i]->getDamage());
+				red.loseHp(rockets[i]->getDamage());
 				rockets.erase(rockets.begin() + i);
 			}
 		}
-		else if (rockets[i]->getBounds().intersects(bird.getBounds()))
+		else if (rockets[i]->getBounds().intersects(rio.getBounds()))
 		{
-			bird.alive = false;
+			rio.alive = false;
 		}
 		i--;
 	}
@@ -128,11 +128,11 @@ void Game::updateDiamond()
 		{
 			diamonds.erase(diamonds.begin() + i);
 		}
-		else if (diamonds[i]->getBounds().intersects(bird.getBounds()))
+		else if (diamonds[i]->getBounds().intersects(rio.getBounds()))
 		{
 			this->respawn += 1;
 			this->points += diamonds[i]->getPoints();
-			if (character.alive) character.buffHp(diamonds[i]->getPoints());
+			if (red.alive) red.buffHp(diamonds[i]->getPoints());
 			diamonds.erase(diamonds.begin() + i);
 		}
 		i--;
@@ -141,36 +141,36 @@ void Game::updateDiamond()
 
 void Game::updateNewCollision()
 {
-	//Rio with diamond
+	//Rio eat diamond
 	int dia_size = diamonds.size();
 	for (int i = 0; i < dia_size; i++)
 	{
-		if (collision(bird.getPosX(), bird.getPosY(), 0.5, 161, 100, diamonds[i]->getPosX(),
+		if (collision(rio.getPosX(), rio.getPosY(), 0.5, 161, 100, diamonds[i]->getPosX(),
 			diamonds[i]->getPosY(), 0.9, 88, 61))
 		{
-			coldiamond.push_back(new CollisionDiamond(bird.getPosX(), bird.getPosY()-50));
+			coldiamond.push_back(new CollisionDiamond(rio.getPosX(), rio.getPosY() - 50));
 		}
 	}
 	//update
-	int dia_colli_size = coldiamond.size()-1;
+	int dia_colli_size = coldiamond.size() - 1;
 	while (dia_colli_size >= 0)
 	{
 		coldiamond[dia_colli_size]->update();
 		dia_colli_size--;
 	}
-	
-	//Red with enemy
+
+	//Red block enemy
 	int enemy_size = enemies.size();
 	for (int i = 0; i < enemy_size; i++)
 	{
-		if (collision(character.getPosX(), character.getPosY(), 1.8, 64, 55, enemies[i]->getPosX(),
+		if (collision(red.getPosX(), red.getPosY(), 1.8, 64, 55, enemies[i]->getPosX(),
 			enemies[i]->getPosY(), 1.45, 59, 54))
 		{
-			colenemy.push_back(new CollisionEnemy(character.getPosX(), character.getPosY()-50));
+			colenemy.push_back(new CollisionEnemy(red.getPosX(), red.getPosY() - 50));
 		}
 	}
 	//update
-	int enemy_colli_size = colenemy.size()-1;
+	int enemy_colli_size = colenemy.size() - 1;
 	while (enemy_colli_size >= 0)
 	{
 		colenemy[enemy_colli_size]->update();
@@ -180,48 +180,48 @@ void Game::updateNewCollision()
 
 void Game::updateCollision()
 {
-	/////////Red collision with screen
+	//////////////Red collision with screen
 	//left
-	if (character.getBounds().left < 0.f)
+	if (red.getBounds().left < 0.f)
 	{
-		character.setPos(62.f, character.getPosY());
+		red.setPos(62.f, red.getPosY());
 	}
 	//right
-	else if (character.getBounds().left + character.getBounds().width > window.getSize().x)
+	else if (red.getBounds().left + red.getBounds().width > window.getSize().x)
 	{
-		character.setPos(window.getSize().x - 60.f, character.getPosY());
+		red.setPos(window.getSize().x - 60.f, red.getPosY());
 	}
 	//top
-	if (character.getBounds().top < 0.f)
+	if (red.getBounds().top < 0.f)
 	{
-		character.setPos(character.getPosX(), window.getSize().y - 940.f);
+		red.setPos(red.getPosX(), window.getSize().y - 940.f);
 	}
 	//bottom	
-	else if (character.getBounds().top + character.getBounds().height > window.getSize().y)
+	else if (red.getBounds().top + red.getBounds().height > window.getSize().y)
 	{
-		character.setPos(character.getPosX(), window.getSize().y - 60.f);
+		red.setPos(red.getPosX(), window.getSize().y - 60.f);
 	}
 
 	///////////Rio collision with screen
 	//left
-	if (bird.getBounds().left < 0.f)
+	if (rio.getBounds().left < 0.f)
 	{
-		bird.setPos(55.f, bird.getPosY());
+		rio.setPos(55.f, rio.getPosY());
 	}
 	//right
-	else if (bird.getBounds().left + bird.getBounds().width > window.getSize().x)
+	else if (rio.getBounds().left + rio.getBounds().width > window.getSize().x)
 	{
-		bird.setPos(window.getSize().x - 60.f, bird.getPosY());
+		rio.setPos(window.getSize().x - 60.f, rio.getPosY());
 	}
 	//top
-	if (bird.getBounds().top < 0.f)
+	if (rio.getBounds().top < 0.f)
 	{
-		bird.setPos(bird.getPosX(), window.getSize().y - 940.f);
+		rio.setPos(rio.getPosX(), window.getSize().y - 940.f);
 	}
 	//bottom	
-	else if (bird.getBounds().top + bird.getBounds().height > window.getSize().y)
+	else if (rio.getBounds().top + rio.getBounds().height > window.getSize().y)
 	{
-		bird.setPos(bird.getPosX(), window.getSize().y - 60.f);
+		rio.setPos(rio.getPosX(), window.getSize().y - 60.f);
 	}
 }
 
@@ -235,7 +235,7 @@ void Game::renderGUI()
 
 void Game::setUp()
 {
-	//Set font
+	//Setup font
 	font.loadFromFile("Font/FONT.ttf");
 
 	//Setup music
@@ -256,7 +256,7 @@ void Game::setUp()
 	Texture_Layers = TextureLayers(typeOfBackground);
 	background.SetupBackground(&window, Texture_Layers, 1920);
 
-	//Setup screen
+	//Setup screen image
 	begin_scr.loadFromFile("Image/Screen/screen_begin.png");
 	end_scr.loadFromFile("Image/Screen/screen_end.png");
 	choose_button.loadFromFile("Image/Screen/play_choosen.png");
@@ -274,7 +274,7 @@ void Game::setUp()
 	pausing_scr.loadFromFile("Image/Screen/pausing_screen.png");
 	sprite_pausing_screen.setTexture(pausing_scr);
 
-	//Set texture smooth
+	//Set textures smooth
 	begin_scr.setSmooth(true);
 	end_scr.setSmooth(true);
 	choose_button.setSmooth(true);
@@ -291,7 +291,7 @@ void Game::setUp()
 	next_unchoose_button.setSmooth(true);
 	pausing_scr.setSmooth(true);
 
-	//Setup Character
+	//Setup character's Image
 	if (typeOfBackground == 0 || typeOfBackground == 3)
 	{
 		this->linkrio = "Image/Character/rio1.png";
@@ -303,24 +303,24 @@ void Game::setUp()
 		this->linkred = "Image/Character/red2.png";
 		this->linkenemy = "Image/Character/enemy2.png";
 	}
-	
-	//Setup characters
-	bird.initTexture(linkrio);
-	bird.setPos(130,450);
 
-	character.initTexture(linkred);
-	character.setPos(380, 450);
+	//Setup maincharacter
+	rio.initTexture(linkrio);
+	rio.setPos(130, 450);
 
-	//button
+	red.initTexture(linkred);
+	red.setPos(380, 450);
+
+	//button_position
 	but_pos = sf::Vector2f(100, 1000 - 1000 / 6);
 }
 
 void Game::reset()
 {
 	window.setFramerateLimit(FRAMES);
-	bird.alive = true;
-	character.alive = true;
-	character.setHp(400);
+	rio.alive = true;
+	red.alive = true;
+	red.setHp(400);
 
 	points = 0;
 	but_pos = sf::Vector2f(100, 1000 - 1000 / 6);
@@ -337,9 +337,9 @@ void Game::reset()
 //Loop While Playing
 void Game::updateWhilePlaying()
 {
-	//Character Control
-	if (character.alive) character.update();
-	bird.update();
+	//red Control
+	if (red.alive) red.update();
+	rio.update();
 	updateCollision();
 
 	//Enemy Control
@@ -357,8 +357,9 @@ void Game::updateWhilePlaying()
 	//Clear and Display Game
 	window.clear(sf::Color(255, 255, 255, 255));
 	background.MoveandDisplay();
-	if (character.alive) character.render(&window);
-	bird.render(&window);
+	if (red.alive) red.render(&window);
+	rio.render(&window);
+	if (!rio.alive) Music.stop();
 
 	//Enemy Display
 	for (auto* enemy : enemies) enemy->render(window);
@@ -370,7 +371,7 @@ void Game::updateWhilePlaying()
 	for (auto* rocket : rockets) rocket->render(this->window);
 
 	//Display collision
-	for(int i=0;i<coldiamond.size();i++)
+	for (int i = 0; i < coldiamond.size(); i++)
 	{
 		if (coldiamond[i]->renderer(this->window)) {
 			coldiamond.erase(coldiamond.begin() + i);
@@ -379,23 +380,23 @@ void Game::updateWhilePlaying()
 
 	for (auto* collision : colenemy) collision->render(this->window);
 
-	//Respawn Logic
-	if (character.getHp() <= 0)
+	//Respawn
+	if (red.getHp() <= 0)
 	{
-		character.alive = false;
-		character.setHp(0);
+		red.alive = false;
+		red.setHp(0);
 	}
 
-	if (!character.alive) {
+	if (!red.alive) {
 		if (respawn >= 7)
 		{
-			character.alive = true;
-			character.setHp(400);
+			red.alive = true;
+			red.setHp(300);
 		}
 	}
 	else respawn = 0;
 
-	//Display Score and Health
+	//Display Point and Health
 	updateGUI();
 	renderGUI();
 }
@@ -406,31 +407,28 @@ bool Game::setGame()
 	setUp();
 	while (window.isOpen())
 	{
-		//Frames Limit
+		//Limit frames
 		window.setFramerateLimit(FRAMES);
 
-		while (gameStart(&window, choose_button, unchoose_button, &e, begin_scr,
-			&Music, music_on_button, music_off_button, exit_on_button, exit_off_button, music_on) == 0)
+		while (gameStart(&window, choose_button, unchoose_button, &e, begin_scr,&Music, music_on_button, music_off_button, exit_on_button, exit_off_button, music_on) == 0)
 		{
-			//Frames Limit
+			//Limit frames
 			window.setFramerateLimit(FRAMES);
 		}
 
-		if (gameStart(&window, choose_button, unchoose_button, &e, begin_scr,
-			&Music, music_on_button, music_off_button, exit_on_button, exit_off_button, music_on) == 2) return false;
+		if (gameStart(&window, choose_button, unchoose_button, &e, begin_scr,&Music, music_on_button, music_off_button, exit_on_button, exit_off_button, music_on) == 2) return false;
 
-		while (Contents_And_Tutor(&window, &e, content, tutorial, &character, &bird,
-			&background, next_choose_button, next_unchoose_button, in_content, but_pos) == 0)
+		while (Plots(&window, &e, content, tutorial, &red, &rio,&background, next_choose_button, next_unchoose_button, in_content, but_pos) == 0)
 		{
-			//Frames Limit
+			//Limit frames
 			window.setFramerateLimit(FRAMES);
 		}
 
-		if (Contents_And_Tutor(&window, &e, content, tutorial, &character, &bird,
-			&background, next_choose_button, next_unchoose_button, in_content, but_pos) == 2) return false;
+		if (Plots(&window, &e, content, tutorial, &red, &rio,&background, next_choose_button, next_unchoose_button, in_content, but_pos) == 2) return false;
 
-		while (bird.alive)
+		while (rio.alive)
 		{
+			//Limit frames
 			window.setFramerateLimit(FRAMES);
 
 			window.pollEvent(e);
@@ -451,20 +449,18 @@ bool Game::setGame()
 			window.display();
 		}
 
-		std::string str_scr = std::to_string(points);
-		int text_offset = -60 - 60 * (str_scr.length() - 1);
+		std::string str_point = std::to_string(points);
+		int point_position_at_end = -60 - 60 * (str_point.length() - 1);
 
-		while (gameReplay(&window, replay_choose_button, replay_unchoose_button, &e, end_scr, points,
-			WINDOW_WIDTH / 2 + text_offset, WINDOW_HEIGHT / 2 - 165, font) == 0)
+		while (gameReplay(&window, replay_choose_button, replay_unchoose_button, &e, end_scr, points,WINDOW_WIDTH / 2 + point_position_at_end, WINDOW_HEIGHT / 2 - 165, font) == 0)
 		{
+			//Limit frames
 			window.setFramerateLimit(FRAMES);
 		}
 
-		if (gameReplay(&window, replay_choose_button, replay_unchoose_button, &e, end_scr, points,
-			WINDOW_WIDTH / 2 + text_offset, WINDOW_HEIGHT / 2 - 165, font) == 1) reset();
+		if (gameReplay(&window, replay_choose_button, replay_unchoose_button, &e, end_scr, points,WINDOW_WIDTH / 2 + point_position_at_end, WINDOW_HEIGHT / 2 - 165, font) == 1) reset();
 
-		if (gameReplay(&window, replay_choose_button, replay_unchoose_button, &e, end_scr, points,
-			WINDOW_WIDTH / 2 + text_offset, WINDOW_HEIGHT / 2 - 165, font) == 2) return false;
+		if (gameReplay(&window, replay_choose_button, replay_unchoose_button, &e, end_scr, points,WINDOW_WIDTH / 2 + point_position_at_end, WINDOW_HEIGHT / 2 - 165, font) == 2) return false;
 	}
 	return false;
 }
@@ -472,13 +468,13 @@ bool Game::setGame()
 //Game Run
 bool Game::running()
 {
-	if (!setGame())
+	if (setGame()==false)
 	{
 		Music.stop();
-		return EXIT_SUCCESS;
+		return 0;
 	}
 	window.close();
-	return EXIT_SUCCESS;
+	return 0;
 }
 
 Game::Game()
