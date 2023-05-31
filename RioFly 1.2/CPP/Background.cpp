@@ -2,53 +2,52 @@
 
 std::vector<sf::Texture> TextureLayers(int typeOfBackground)
 {
-	std::vector<sf::Texture> tex_vex;
+	std::vector<sf::Texture> texture_bg;
 	sf::Texture temp_Texture;
 
 	if (typeOfBackground == 0)
 	{
-		temp_Texture.loadFromFile("Image/LayerBackground/0.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/1.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/2.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/3.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/4.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/5.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/6.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/0.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/1.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/2.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/3.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/4.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/5.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/6.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
 	}
 
 	if (typeOfBackground == 1)
 	{
-		temp_Texture.loadFromFile("Image/LayerBackground/7.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/8.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/9.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/10.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/11.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/12.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/13.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/7.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/8.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/9.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/10.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/11.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/12.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/13.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
 	}
 
 	if (typeOfBackground == 2)
 	{
-		temp_Texture.loadFromFile("Image/LayerBackground/14.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/15.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/16.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/17.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/18.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/19.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/20.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/14.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/15.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/16.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/17.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/18.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/19.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/20.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
 	}
 
 	if (typeOfBackground == 3)
 	{
-		temp_Texture.loadFromFile("Image/LayerBackground/21.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/22.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/23.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/24.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/25.png"); tex_vex.push_back(temp_Texture);
-		temp_Texture.loadFromFile("Image/LayerBackground/26.png"); tex_vex.push_back(temp_Texture);
+		temp_Texture.loadFromFile("Image/LayerBackground/21.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/22.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/23.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/24.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/25.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
+		temp_Texture.loadFromFile("Image/LayerBackground/26.png"); texture_bg.push_back(temp_Texture); temp_Texture.setSmooth(true);
 	}
-	temp_Texture.setSmooth(true);
-	return tex_vex;
+	return texture_bg;
 }
 
 void Background::SetupBackground(sf::RenderWindow* window, std::vector<sf::Texture>& Textures, int layer_width)
