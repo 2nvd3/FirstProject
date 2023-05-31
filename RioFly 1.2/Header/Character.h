@@ -10,7 +10,7 @@
 
 #define PI 3.14159265
 
-class Character
+class Red
 {
 private:
 	//Texture and Sprite
@@ -35,7 +35,7 @@ private:
 	void initAnimation();
 public:
 	bool alive = true;
-	Character();
+	Red();
 	void initTexture(std::string &link);
 
 	const sf::FloatRect getBounds() const;
@@ -61,7 +61,7 @@ public:
 	void render(sf::RenderTarget* target);
 };
 
-class Bird
+class Rio
 {
 private:
 	//Texture and sprite
@@ -84,7 +84,7 @@ private:
 public:
 	float speed = 30;
 	bool alive = true;
-	Bird();
+	Rio();
 	const sf::FloatRect getBounds() const;
 	
 	void initTexture(std::string& link);
@@ -214,11 +214,11 @@ public:
 	float getPosX();
 	float getPosY();
 
-	void update(float birdPosX, float birdPosY, bool birdAlive);
+	void update(float rioPosX, float rioPosY, bool rioAlive);
 	void updateAnimation();
 	void render(sf::RenderTarget& target);
 
-	void Catch(float birdPosX, float birdPosY, bool birdAlive);
+	void Catch(float rioPosX, float rioPosY, bool rioAlive);
 };
 
 class CollisionDiamond
