@@ -14,7 +14,7 @@ private:
 	sf::RenderWindow window;
 	sf::Event e;
 
-	//SetUp
+	//texture
 	sf::Texture begin_scr;
 	sf::Texture end_scr;
 	sf::Texture unchoose_button;
@@ -44,14 +44,14 @@ private:
 
 	sf::Vector2f but_pos;
 
-	//Characters texture
+	//character's texture
 	std::string linkred;
 	std::string linkrio;
 	std::string linkenemy;
 
-	//Character
-	Character character;
-	Bird bird;
+	//main character
+	Red red;
+	Rio rio;
 	int respawn = 0;
 
 	//enemy
@@ -85,7 +85,7 @@ private:
 	int typeOfMusic;
 	std::vector<std::string> Name_Of_Songs;
 	
-	//playerGUI
+	//GUI
 	sf::RectangleShape playerHp;
 	sf::RectangleShape playerHpBack;
 public:
