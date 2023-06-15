@@ -623,14 +623,14 @@ CollisionEnemy::CollisionEnemy(float pos_x, float pos_y)
 
 bool collision(float posX_1, float posY_1, float scale_1, float width_1, float height_1, float posX_2, float posY_2, float scale_2, float width_2, float height_2)
 {
-	sf::Vector2f _First_tl = sf::Vector2f(posX_1 - (width_1 / 2) * scale_1, posY_1 - (height_1 / 2) * scale_1),
-		_First_br = sf::Vector2f(posX_1 + (width_1 / 2) * scale_1, posY_1 + (height_1 / 2) * scale_1);
+	sf::Vector2f first_topleft = sf::Vector2f(posX_1 - (width_1 / 2) * scale_1, posY_1 - (height_1 / 2) * scale_1),
+		first_bottomright = sf::Vector2f(posX_1 + (width_1 / 2) * scale_1, posY_1 + (height_1 / 2) * scale_1);
 
-	sf::Vector2f _Second_tl = sf::Vector2f(posX_2 - (width_2 / 2) * scale_2, posY_2 - (height_2 / 2) * scale_2),
-		_Second_br = sf::Vector2f(posX_2 + (width_2 / 2) * scale_2, posY_2 + (height_2 / 2) * scale_2);
+	sf::Vector2f second_topleft = sf::Vector2f(posX_2 - (width_2 / 2) * scale_2, posY_2 - (height_2 / 2) * scale_2),
+		second_bottomright = sf::Vector2f(posX_2 + (width_2 / 2) * scale_2, posY_2 + (height_2 / 2) * scale_2);
 
-	if (_First_br.x < _Second_tl.x || _First_tl.x > _Second_br.x) return false;
-	if (_First_br.y < _Second_tl.y || _First_tl.y > _Second_br.y) return false;
+	if (first_bottomright.x < second_topleft.x || first_topleft.x > second_bottomright.x) return false;
+	if (first_bottomright.y < second_topleft.y || first_topleft.y > second_bottomright.y) return false;
 
 	return true;
 }
