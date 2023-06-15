@@ -1,4 +1,5 @@
 #pragma once
+
 #pragma warning(disable : 4244)
 
 #include <SFML/Graphics.hpp>
@@ -44,12 +45,10 @@ public:
 	void setPos(const float x, const float y);
 	
 	void buffHp(const int value);
-	void setHp(const int hp);
+	void setHp(const int value);
 	void loseHp(const int value);
 
-	void move(const float dirX,const float dirY);
 	void updateMove();
-	
 	void update();
 	void updateAnimation();
 
@@ -90,10 +89,10 @@ public:
 	void setPos(const sf::Vector2f pos);
 	void setPos(const float x, const float y);
 
-	void move(const float dirX, const float dirY);
 	void update();
 	void updateAnimation();
 	void updateMove();
+
 	void render(sf::RenderTarget* target);
 };
 
