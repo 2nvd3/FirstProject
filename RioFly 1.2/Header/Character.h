@@ -1,12 +1,7 @@
 #pragma once
-
 #pragma warning(disable : 4244)
 
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <iostream>
-#include <cmath>
-#include <ctime>
 
 #define PI 3.14159265
 
