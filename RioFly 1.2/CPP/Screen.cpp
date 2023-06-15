@@ -162,6 +162,7 @@ int gameReplay(sf::RenderWindow* window, sf::Texture& replay_choose_button, sf::
     return 0;
 }
 
+//cốt truyện
 int Plots(sf::RenderWindow* window, sf::Event* e, sf::Texture& content, sf::Texture& tutorial,
     Red* red, Rio* rio, Background* background, sf::Texture& next_choose_button,
     sf::Texture& next_unchoose_button, bool& in_content, sf::Vector2f& but_pos)
@@ -196,7 +197,7 @@ int Plots(sf::RenderWindow* window, sf::Event* e, sf::Texture& content, sf::Text
             if (in_content)
             {
                 in_content = false;
-                but_pos = sf::Vector2f(1700, 1000 - 1000 / 6);
+                but_pos = sf::Vector2f(1700, 833);
             }
             else return 1;
         }
