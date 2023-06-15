@@ -124,11 +124,6 @@ void Red::updateMove()
 	this->sprite.setRotation(alpha);
 }
 
-void Red::move(const float dirX, const float dirY)
-{
-	this->sprite.move(this->moveSpeed * dirX, this->moveSpeed * dirY);
-}
-
 Red::Red()
 {
 	this->hpMax = 300;
@@ -236,11 +231,6 @@ void Rio::updateAnimation()
 void Rio::render(sf::RenderTarget* target)
 {
 	target->draw(this->sprite);
-}
-
-void Rio::move(const float dirX, const float dirY)
-{
-	this->sprite.move(this->speed * dirX, this->speed * dirY);
 }
 
 Rio::Rio()
